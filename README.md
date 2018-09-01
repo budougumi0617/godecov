@@ -8,8 +8,16 @@ Unofficial Go wrapper library for the Codecov API.
 ## Demo
 
 ## VS.
+- REST API Endpoints
+  - https://docs.codecov.io/reference
+
+No exist the similar API library yet.
 
 ## Requirement
+To access Codecov's API as an authenticated user please create an access token in Codecov.
+
+- https://docs.codecov.io/reference#authorization
+
 
 ## Usage
 
