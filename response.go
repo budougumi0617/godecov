@@ -40,6 +40,16 @@ type errorObject struct {
 	Errors  interface{} `json:"errors,omitempty"`
 }
 
+// Commit defines a git commit.
+type Commit struct {
+	Author    Author `json:"author"`
+	Timestamp string `json:"timestamp"`
+	Totals    Totals `json:"totals"`
+	Commitid  string `json:"commitid"`
+	CiPassed  bool   `json:"ci_passed"`
+	Message   string `json:"message"`
+}
+
 // OwnerResponse is struct for response from /api/gh/:owner.
 type OwnerResponse struct {
 	Repos []struct {
@@ -47,14 +57,7 @@ type OwnerResponse struct {
 		Name     string      `json:"name"`
 		Language string      `json:"language"`
 		Cache    struct {
-			Commit struct {
-				Author    Author `json:"author"`
-				Timestamp string `json:"timestamp"`
-				Totals    Totals `json:"totals"`
-				Commitid  string `json:"commitid"`
-				CiPassed  bool   `json:"ci_passed"`
-				Message   string `json:"message"`
-			} `json:"commit"`
+			Commit Commit `json:"commit"`
 		} `json:"cache"`
 		Activated    bool    `json:"activated"`
 		Private      bool    `json:"private"`
