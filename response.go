@@ -121,31 +121,34 @@ type SingleRepoResponse struct {
 	} `json:"commit"`
 }
 
+// Head id generated struct.
+type Head struct {
+	Author    Author `json:"author"`
+	Timestamp string `json:"timestamp"`
+	Totals    struct {
+		C             int    `json:"C"` // Unkonwn field
+		CoverageRatio string `json:"c"` // coverage ratio
+		Files         int    `json:"f"` // files count
+		Lines         int    `json:"n"` // lines count
+		Hits          int    `json:"h"` // hits count
+		Missed        int    `json:"m"` // missed count
+		Partials      int    `json:"p"` // partials count
+		Branches      int    `json:"b"` // branches count
+		Methods       int    `json:"d"` // methods count
+		Messages      int    `json:"M"` // messages count
+		Sessions      int    `json:"s"` // sessions count
+		// Diff []interface{} `json:"diff"`
+	} `json:"totals"`
+	Commitid string `json:"commitid"`
+	CiPassed bool   `json:"ci_passed"`
+	Message  string `json:"message"`
+}
+
 // PullsResponse is generated struct.
 type PullsResponse struct {
 	Owner Author `json:"owner"`
 	Pulls []struct {
-		Head struct {
-			Author    Author `json:"author"`
-			Timestamp string `json:"timestamp"`
-			Totals    struct {
-				C             int    `json:"C"` // Unkonwn field
-				CoverageRatio string `json:"c"` // coverage ratio
-				Files         int    `json:"f"` // files count
-				Lines         int    `json:"n"` // lines count
-				Hits          int    `json:"h"` // hits count
-				Missed        int    `json:"m"` // missed count
-				Partials      int    `json:"p"` // partials count
-				Branches      int    `json:"b"` // branches count
-				Methods       int    `json:"d"` // methods count
-				Messages      int    `json:"M"` // messages count
-				Sessions      int    `json:"s"` // sessions count
-				// Diff []interface{} `json:"diff"`
-			} `json:"totals"`
-			Commitid string `json:"commitid"`
-			CiPassed bool   `json:"ci_passed"`
-			Message  string `json:"message"`
-		} `json:"head"`
+		Head        Head        `json:"head"`
 		Issueid     int         `json:"issueid"`
 		Title       string      `json:"title"`
 		Author      Author      `json:"author"`
