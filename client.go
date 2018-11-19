@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -15,6 +14,7 @@ import (
 
 const (
 	apiEndpoint = "https://codecov.io/api/"
+	ghEndPoint  = "gh"
 )
 
 // TestMethod is temp method
@@ -22,18 +22,13 @@ func (c *Client) TestMethod() {
 	q := url.Values{
 		"state": []string{"all"},
 	}
-	res, err := c.get("gh/budougumi0617/gopl/pulls", q)
+	var res PullsResponse
+	err := c.get("gh/budougumi0617/gopl/pulls", q, &res)
 	if err != nil {
 		fmt.Printf("err = %+v\n", err)
 		panic(err)
 	}
-	var resStruct PullsResponse
-	err = c.decodeJSON(res, &resStruct)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("a = %+v\n", resStruct)
+	fmt.Printf("a = %+v\n", res)
 }
 
 func newDefaultHTTPClient() *http.Client {
@@ -102,15 +97,20 @@ func (c *Client) post(path string, payload interface{}, headers *map[string]stri
 	return c.do("POST", path, bytes.NewBuffer(data), headers)
 }
 
-func (c *Client) get(path string, query url.Values) (*http.Response, error) {
+func (c *Client) get(path string, query url.Values, v interface{}) error {
 	if len(query) != 0 {
 		path = path + "?" + query.Encode()
 	}
-	return c.do("GET", path, nil, nil)
+	if resp, err := c.do("GET", path, nil, nil); err != nil {
+		return err
+	}
+	err = c.decodeJSON(resp, v)
+	return err
 }
 
 func (c *Client) do(method, path string, body io.Reader, headers *map[string]string) (*http.Response, error) {
-	endpoint := apiEndpoint + path
+	// FIXME Need to able to change host site.
+	endpoint := path.Join(apiEndpoint, ghEndPoint, path)
 	req, _ := http.NewRequest(method, endpoint, body)
 	if headers != nil {
 		for k, v := range *headers {

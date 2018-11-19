@@ -50,8 +50,8 @@ type Commit struct {
 	Message   string `json:"message"`
 }
 
-// OwnerResponse is struct for response from /api/gh/:owner.
-type OwnerResponse struct {
+// Owner is struct for response from /api/gh/:owner.
+type Owner struct {
 	Repos []struct {
 		Fork     interface{} `json:"fork"`
 		Name     string      `json:"name"`
