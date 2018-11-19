@@ -44,10 +44,10 @@ type errorObject struct {
 type Commit struct {
 	Author    Author `json:"author"`
 	Timestamp string `json:"timestamp"`
-	Totals    Totals `json:"totals"`
-	Commitid  string `json:"commitid"`
-	CiPassed  bool   `json:"ci_passed"`
-	Message   string `json:"message"`
+	// Totals    Totals `json:"totals"`
+	Commitid string `json:"commitid"`
+	CiPassed bool   `json:"ci_passed"`
+	Message  string `json:"message"`
 }
 
 // Owner is struct for response from /api/gh/:owner.
@@ -57,7 +57,20 @@ type Owner struct {
 		Name     string      `json:"name"`
 		Language string      `json:"language"`
 		Cache    struct {
-			Commit Commit `json:"commit"`
+			Commit struct {
+				Author struct {
+					Username  string      `json:"username"`
+					ServiceID string      `json:"service_id"`
+					Name      interface{} `json:"name"`
+					Service   string      `json:"service"`
+					Email     interface{} `json:"email"`
+				} `json:"author"`
+				Timestamp string        `json:"timestamp"`
+				Totals    []interface{} `json:"totals"`
+				Commitid  string        `json:"commitid"`
+				CiPassed  interface{}   `json:"ci_passed"`
+				Message   string        `json:"message"`
+			} `json:"commit"`
 		} `json:"cache"`
 		Activated    bool    `json:"activated"`
 		Private      bool    `json:"private"`
@@ -67,8 +80,18 @@ type Owner struct {
 		Coverage     float64 `json:"coverage"`
 		Repoid       string  `json:"repoid"`
 	} `json:"repos"`
-	Meta  Meta   `json:"meta"`
-	Owner Author `json:"owner"`
+	Meta struct {
+		Status int `json:"status"`
+		Limit  int `json:"limit"`
+		Page   int `json:"page"`
+	} `json:"meta"`
+	Owner struct {
+		Username    string      `json:"username"`
+		Name        interface{} `json:"name"`
+		Service     string      `json:"service"`
+		Updatestamp string      `json:"updatestamp"`
+		ServiceID   string      `json:"service_id"`
+	} `json:"owner"`
 }
 
 // SingleRepoResponse is generated struct.

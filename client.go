@@ -14,7 +14,7 @@ import (
 
 const (
 	apiEndpoint = "https://codecov.io/api/"
-	ghEndPoint  = "gh"
+	ghEndPoint  = "gh/"
 )
 
 // TestMethod is temp method
@@ -101,16 +101,16 @@ func (c *Client) get(path string, query url.Values, v interface{}) error {
 	if len(query) != 0 {
 		path = path + "?" + query.Encode()
 	}
-	if resp, err := c.do("GET", path, nil, nil); err != nil {
+	resp, err := c.do("GET", path, nil, nil)
+	if err != nil {
 		return err
 	}
-	err = c.decodeJSON(resp, v)
-	return err
+	return c.decodeJSON(resp, v)
 }
 
 func (c *Client) do(method, path string, body io.Reader, headers *map[string]string) (*http.Response, error) {
 	// FIXME Need to able to change host site.
-	endpoint := path.Join(apiEndpoint, ghEndPoint, path)
+	endpoint := apiEndpoint + ghEndPoint + path
 	req, _ := http.NewRequest(method, endpoint, body)
 	if headers != nil {
 		for k, v := range *headers {
@@ -119,6 +119,7 @@ func (c *Client) do(method, path string, body io.Reader, headers *map[string]str
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "token "+c.authToken)
+	fmt.Println("get", endpoint)
 
 	resp, err := c.HTTPClient.Do(req)
 	return c.checkResponse(resp, err)
@@ -126,8 +127,7 @@ func (c *Client) do(method, path string, body io.Reader, headers *map[string]str
 
 func (c *Client) decodeJSON(resp *http.Response, payload interface{}) error {
 	defer resp.Body.Close()
-	decoder := json.NewDecoder(resp.Body)
-	return decoder.Decode(payload)
+	return json.NewDecoder(resp.Body).Decode(payload)
 }
 
 func (c *Client) checkResponse(resp *http.Response, err error) (*http.Response, error) {
