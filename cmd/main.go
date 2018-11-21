@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("res =\n%v\n", res)
+	fmt.Printf("res =\n%#v\n", res.Repos[0].Cache.Commit.Totals)
+	fmt.Printf("res =\n%#v\n", res.Repos[0].Cache.Commit)
 	fmt.Println("main finished")
 }
