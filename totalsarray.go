@@ -26,14 +26,10 @@ type TotalsArray struct {
 
 // UnmarshalJSON creates TotalsArray from []interface{}.
 func (ta *TotalsArray) UnmarshalJSON(data []byte) error {
-	var row interface{}
-	err := json.Unmarshal(data, &row)
+	var arr []interface{}
+	err := json.Unmarshal(data, &arr)
 	if err != nil {
 		return err
-	}
-	arr, ok := row.([]interface{})
-	if !ok {
-		return errors.New("failed type cast")
 	}
 	// TODO Use NullInt
 	f, ok := arr[0].(float64)
