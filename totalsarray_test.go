@@ -57,20 +57,19 @@ func TestTotalsArray_UnmarshalJSON(t *testing.T) {
 }
 
 func TestTotalsArray_MarshalJSON(t *testing.T) {
+	type In struct {
+		Totals TotalsArray `json:"totals"`
+	}
 	tests := []struct {
-		subject string
-		in      struct {
-			Totals TotalsArray `json:"totals"`
-		}
+		subject   string
+		in        In
 		want      string
 		wantError bool
 		err       error
 	}{
 		{
 			subject: "simple",
-			in: struct {
-				Totals TotalsArray `json:"totals"`
-			}{
+			in: In{
 				Totals: TotalsArray{
 					Files:         6,
 					Lines:         22,
