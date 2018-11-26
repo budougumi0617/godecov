@@ -73,7 +73,7 @@ func (ta *TotalsArray) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// TODO Define MarshalJSON for TotalsArray
-// func (ta *TotalsArray) MarshalJSON()([]byte, error){
-//
-// }
+// MarshalJSON TODO Define MarshalJSON for TotalsArray
+func (ta *TotalsArray) MarshalJSON() ([]byte, error) {
+	return []byte("[0,0,0]"), nil
+}

@@ -58,26 +58,32 @@ func TestTotalsArray_UnmarshalJSON(t *testing.T) {
 
 func TestTotalsArray_MarshalJSON(t *testing.T) {
 	tests := []struct {
-		subject   string
-		in        TotalsArray
+		subject string
+		in      struct {
+			Totals TotalsArray `json:"totals"`
+		}
 		want      string
 		wantError bool
 		err       error
 	}{
 		{
 			subject: "simple",
-			in: TotalsArray{
-				Files:         6,
-				Lines:         22,
-				Hits:          18,
-				Partials:      4,
-				Missed:        0,
-				CoverageRatio: "81.81818",
-				Sessions:      1,
-				Messages:      0,
-				N:             0,
-				Branches:      0,
-				Methods:       0,
+			in: struct {
+				Totals TotalsArray `json:"totals"`
+			}{
+				Totals: TotalsArray{
+					Files:         6,
+					Lines:         22,
+					Hits:          18,
+					Partials:      4,
+					Missed:        0,
+					CoverageRatio: "81.81818",
+					Sessions:      1,
+					Messages:      0,
+					N:             0,
+					Branches:      0,
+					Methods:       0,
+				},
 			},
 			want:      "{\"totals\":[6,22,18,4,0,\"81.81818\",0,0,0,1,0,0,null]}",
 			wantError: false,
@@ -87,7 +93,7 @@ func TestTotalsArray_MarshalJSON(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.subject, func(t *testing.T) {
 
-			got, err := json.Marshal(tt.in)
+			got, err := json.Marshal(&tt.in)
 
 			if !tt.wantError && err != nil {
 				t.Fatalf("want no err, but has error %#v", err)
