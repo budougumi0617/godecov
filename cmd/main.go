@@ -11,7 +11,7 @@ import (
 func main() {
 	tok := os.Getenv("CODECOV_TOKEN")
 	cli := godecov.NewClient(tok)
-	res, err := cli.GetOwner("budougumi0617")
+	res, err := cli.GetOwner(os.Args[1])
 	if err != nil {
 		log.Fatal(err)
 	}
