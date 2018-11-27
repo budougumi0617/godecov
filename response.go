@@ -46,12 +46,12 @@ type errorObject struct {
 
 // Commit defines a git commit.
 type Commit struct {
-	Author    Author `json:"author"`
-	Timestamp string `json:"timestamp"`
-	// Totals    Totals `json:"totals"`
-	Commitid string `json:"commitid"`
-	CiPassed bool   `json:"ci_passed"`
-	Message  string `json:"message"`
+	Author    Author      `json:"author"`
+	Timestamp string      `json:"timestamp"`
+	Totals    TotalsArray `json:"totals"`
+	Commitid  string      `json:"commitid"`
+	CiPassed  bool        `json:"ci_passed"`
+	Message   string      `json:"message"`
 }
 
 // Owner is struct for response from /api/gh/:owner.
@@ -61,20 +61,7 @@ type Owner struct {
 		Name     string      `json:"name"`
 		Language string      `json:"language"`
 		Cache    struct {
-			Commit struct {
-				Author struct {
-					Username  string      `json:"username"`
-					ServiceID string      `json:"service_id"`
-					Name      interface{} `json:"name"`
-					Service   string      `json:"service"`
-					Email     interface{} `json:"email"`
-				} `json:"author"`
-				Timestamp string      `json:"timestamp"`
-				Totals    TotalsArray `json:"totals"`
-				Commitid  string      `json:"commitid"`
-				CiPassed  interface{} `json:"ci_passed"`
-				Message   string      `json:"message"`
-			} `json:"commit"`
+			Commit Commit `json:"commit"`
 		} `json:"cache"`
 		Activated    bool    `json:"activated"`
 		Private      bool    `json:"private"`
@@ -84,18 +71,8 @@ type Owner struct {
 		Coverage     float64 `json:"coverage"`
 		Repoid       string  `json:"repoid"`
 	} `json:"repos"`
-	Meta struct {
-		Status int `json:"status"`
-		Limit  int `json:"limit"`
-		Page   int `json:"page"`
-	} `json:"meta"`
-	Owner struct {
-		Username    string      `json:"username"`
-		Name        interface{} `json:"name"`
-		Service     string      `json:"service"`
-		Updatestamp string      `json:"updatestamp"`
-		ServiceID   string      `json:"service_id"`
-	} `json:"owner"`
+	Meta  Meta   `json:"meta"`
+	Owner Author `json:"owner"`
 }
 
 // SingleRepoResponse is generated struct.
