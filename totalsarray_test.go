@@ -84,7 +84,7 @@ func TestTotalsArray_MarshalJSON(t *testing.T) {
 					Methods:       0,
 				},
 			},
-			want:      "{\"totals\":[6,22,18,4,0,\"81.81818\",0,0,0,1,0,0,null]}",
+			want:      "{\"totals\":[6,22,18,4,0,\"81.81818\",0,0,0,1,0,0]}",
 			wantError: false,
 			// err: fmt.Errorf(""),
 		},

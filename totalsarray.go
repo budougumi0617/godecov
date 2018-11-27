@@ -5,6 +5,7 @@ package godecov
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 )
 
 // TotalsArray is included many Codcov responses.
@@ -75,5 +76,19 @@ func (ta *TotalsArray) UnmarshalJSON(data []byte) error {
 
 // MarshalJSON TODO Define MarshalJSON for TotalsArray
 func (ta *TotalsArray) MarshalJSON() ([]byte, error) {
-	return []byte("[0,0,0]"), nil
+
+	return []byte(fmt.Sprintf("[%d, %d, %d, %d, %d, \"%s\", %d, %d, %d, %d, %d, %d]",
+		ta.Files,
+		ta.Lines,
+		ta.Hits,
+		ta.Partials,
+		ta.Missed,
+		ta.CoverageRatio,
+		0,
+		0,
+		0,
+		ta.Sessions,
+		0,
+		0,
+	)), nil
 }
