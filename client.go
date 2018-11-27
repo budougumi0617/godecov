@@ -1,3 +1,5 @@
+// Copyright (c) 2018.  Yoichiro Shimizu @budougumi0617
+
 package godecov
 
 import (
