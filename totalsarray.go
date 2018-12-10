@@ -4,8 +4,9 @@ package godecov
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 // TotalsArray is included many Codcov responses.

@@ -11,6 +11,9 @@ import (
 func main() {
 	tok := os.Getenv("CODECOV_TOKEN")
 	cli := godecov.NewClient(tok)
+	if len(os.Args) < 2 {
+		log.Fatal("Need input args as owner name")
+	}
 	res, err := cli.GetOwner(os.Args[1])
 	if err != nil {
 		log.Fatal(err)
