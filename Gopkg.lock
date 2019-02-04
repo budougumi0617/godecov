@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:26c99204a63bc155b8adfca98e27d53e169722b67ddadbff7b37190e18644e8b"
+  name = "github.com/mattn/go-nulltype"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "fd8941858ec7826fe2461b94ef81b2f62e7e5e47"
+
+[[projects]]
   digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
   name = "github.com/pkg/errors"
   packages = ["."]
@@ -12,6 +20,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/pkg/errors"]
+  input-imports = [
+    "github.com/mattn/go-nulltype",
+    "github.com/pkg/errors",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

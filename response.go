@@ -4,6 +4,8 @@ package godecov
 
 import (
 	"time"
+
+	null "github.com/mattn/go-nulltype"
 )
 
 // Author is authore information
@@ -17,7 +19,7 @@ type Author struct {
 
 // Totals is included many Codcov responses.
 type Totals struct {
-	// C    int           `json:"C"`
+	C             int    `json:"C"`
 	CoverageRatio string `json:"c"` // coverage ratio
 	Files         int    `json:"f"` // files count
 	Lines         int    `json:"n"` // lines count
@@ -54,8 +56,8 @@ type Commit struct {
 	Message   string      `json:"message"`
 }
 
-// Owner is struct for response from /api/gh/:owner.
-type Owner struct {
+// OwnerResponse is struct for response from /api/gh/:owner.
+type OwnerResponse struct {
 	Repos []struct {
 		Fork     interface{} `json:"fork"`
 		Name     string      `json:"name"`
@@ -75,6 +77,16 @@ type Owner struct {
 	Owner Author `json:"owner"`
 }
 
+// Owner is authore information
+type Owner struct {
+	Service   string          `json:"service"`
+	Name      string          `json:"name"`
+	Email     string          `json:"email"`
+	Username  string          `json:"username"`
+	AvatarURL null.NullString `json:"avatar_url"`
+	ServiceID string          `json:"service_id"`
+}
+
 // SingleRepoResponse is generated struct.
 type SingleRepoResponse struct {
 	Commits []struct {
@@ -91,20 +103,20 @@ type SingleRepoResponse struct {
 		Merged       bool   `json:"merged"`
 	} `json:"commits"`
 	Repo struct {
-		UsingIntegration bool      `json:"using_integration"`
-		Name             string    `json:"name"`
-		Language         string    `json:"language"`
-		Deleted          bool      `json:"deleted"`
-		Activated        bool      `json:"activated"`
-		Private          bool      `json:"private"`
-		Updatestamp      time.Time `json:"updatestamp"`
-		Branch           string    `json:"branch"`
-		Active           bool      `json:"active"`
-		ServiceID        string    `json:"service_id"`
-		ImageToken       string    `json:"image_token"`
+		UsingIntegration bool          `json:"using_integration"`
+		Name             string        `json:"name"`
+		Language         string        `json:"language"`
+		Deleted          bool          `json:"deleted"`
+		Activated        bool          `json:"activated"`
+		Private          bool          `json:"private"`
+		Updatestamp      time.Time     `json:"updatestamp"`
+		Branch           string        `json:"branch"`
+		Active           null.NullBool `json:"active"`
+		ServiceID        string        `json:"service_id"`
+		ImageToken       string        `json:"image_token"`
 	} `json:"repo"`
-	Meta   Meta   `json:"meta"`
-	Owner  Author `json:"owner"`
+	Meta   Meta  `json:"meta"`
+	Owner  Owner `json:"owner"`
 	Commit struct {
 		Commitid     string      `json:"commitid"`
 		Parent       string      `json:"parent"`
