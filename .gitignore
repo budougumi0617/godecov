@@ -20,4 +20,5 @@ vendor/
 
 main
 tmp/
+bin/
 
