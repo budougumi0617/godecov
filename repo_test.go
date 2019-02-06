@@ -13,7 +13,7 @@ func TestClient_GetSingleRepository(t *testing.T) {
 	// Confirm degradation
 	user := "budougumi0617"
 	repo := "godecov"
-	tok := os.Getenv("CODECOV_TOKEN")
+	tok := os.Getenv("CODECOV_API_TOKEN")
 	cli := godecov.NewClient(tok)
 	_, err := cli.GetSingleRepository(user, repo)
 	if err != nil {

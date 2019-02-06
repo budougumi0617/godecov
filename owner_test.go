@@ -12,7 +12,7 @@ import (
 func TestClient_GetOwner(t *testing.T) {
 	// Confirm degradation
 	user := "budougumi0617"
-	tok := os.Getenv("CODECOV_TOKEN")
+	tok := os.Getenv("CODECOV_API_TOKEN")
 	cli := godecov.NewClient(tok)
 	_, err := cli.GetOwner(user)
 	if err != nil {
