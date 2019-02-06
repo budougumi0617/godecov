@@ -1,10 +1,10 @@
 defaults: &defaults
-  working_directory: /go/src/github.com/budougumi0617/godecov/vendor/
+  working_directory: /go/src/github.com/budougumi0617/godecov
   docker:
     - image: circleci/golang:1.11.5
   environment:
     - GOPATH: /go
-    - SRC_PATH: /go/src/github.com/budougumi0617/godecov/vendor/
+    - SRC_PATH: /go/src/github.com/budougumi0617/godecov
     # For code coverage
     - TEST_RESULTS: /tmp/test-results
     - GO_COVERAGE_OUT: go-coverage.out
