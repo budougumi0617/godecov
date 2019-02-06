@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
@@ -130,7 +131,11 @@ func (c *Client) do(method, path string, body io.Reader, headers *map[string]str
 }
 
 func (c *Client) decodeJSON(resp *http.Response, payload interface{}) error {
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			log.Fatalln(err)
+		}
+	}()
 	return json.NewDecoder(resp.Body).Decode(payload)
 }
 
