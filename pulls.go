@@ -11,6 +11,7 @@ import (
 // GetPulls gets pull requests information from /api/gh/:owner/:repo/pulls.
 // See also https://docs.codecov.io/reference#section-list-pull-requests
 func (cli *Client) GetPulls(owner, repo string) (*PullsResponse, error) {
+	// TODO Add parameters
 	if len(owner) == 0 {
 		return nil, errors.New("owner name was empty")
 	}
