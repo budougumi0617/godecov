@@ -14,17 +14,12 @@ func main() {
 	if len(os.Args) < 3 {
 		log.Fatal("Need input args as owner name")
 	}
-	res, err := cli.GetSingleRepository(os.Args[1], os.Args[2])
+	res, err := cli.GetPulls(os.Args[1], os.Args[2])
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("AvatarURL =\n\"%+v\"\n", res.Owner.AvatarURL)
+	fmt.Printf("AvatarURL =\n\"%+v\"\n", res.Pulls)
 	fmt.Printf("res =\n%#v\n", res)
 
-	reso, err := cli.GetOwner(os.Args[1])
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("res =\n%#v\n", reso)
 	fmt.Println("main finished")
 }

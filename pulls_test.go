@@ -9,13 +9,13 @@ import (
 	"github.com/budougumi0617/godecov"
 )
 
-func TestClient_GetSingleRepository(t *testing.T) {
+func TestClient_GetPulls(t *testing.T) {
 	// Confirm degradation
 	user := "budougumi0617"
 	repo := "godecov"
 	tok := os.Getenv("CODECOV_API_TOKEN")
 	cli := godecov.NewClient(tok)
-	_, err := cli.GetSingleRepository(user, repo)
+	_, err := cli.GetPulls(user, repo)
 	if err != nil {
 		t.Fatal(err)
 	}
