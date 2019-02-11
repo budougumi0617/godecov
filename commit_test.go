@@ -9,14 +9,14 @@ import (
 	"github.com/budougumi0617/godecov"
 )
 
-func TestClient_GetPull(t *testing.T) {
+func TestClient_GetCommit(t *testing.T) {
 	// Confirm degradation
 	user := "budougumi0617"
 	repo := "gopl"
-	no := 10
+	sha := "d4aa993"
 	tok := os.Getenv("CODECOV_API_TOKEN")
 	cli := godecov.NewClient(tok)
-	_, err := cli.GetPull(user, repo, no)
+	_, err := cli.GetCommit(user, repo, sha)
 	if err != nil {
 		t.Fatal(err)
 	}
