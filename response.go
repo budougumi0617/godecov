@@ -77,7 +77,7 @@ type OwnerResponse struct {
 	Owner Author `json:"owner"`
 }
 
-// Owner is authore information
+// Owner is author information.
 type Owner struct {
 	Service   string          `json:"service"`
 	Name      string          `json:"name"`
@@ -85,6 +85,21 @@ type Owner struct {
 	Username  string          `json:"username"`
 	AvatarURL null.NullString `json:"avatar_url"`
 	ServiceID string          `json:"service_id"`
+}
+
+// Repo is repository information.
+type Repo struct {
+	UsingIntegration bool          `json:"using_integration"`
+	Name             string        `json:"name"`
+	Language         string        `json:"language"`
+	Deleted          bool          `json:"deleted"`
+	Activated        bool          `json:"activated"`
+	Private          bool          `json:"private"`
+	Updatestamp      time.Time     `json:"updatestamp"`
+	Branch           string        `json:"branch"`
+	Active           null.NullBool `json:"active"`
+	ServiceID        string        `json:"service_id"`
+	ImageToken       string        `json:"image_token"`
 }
 
 // SingleRepoResponse is generated struct.
@@ -102,19 +117,7 @@ type SingleRepoResponse struct {
 		Message      string `json:"message"`
 		Merged       bool   `json:"merged"`
 	} `json:"commits"`
-	Repo struct {
-		UsingIntegration bool          `json:"using_integration"`
-		Name             string        `json:"name"`
-		Language         string        `json:"language"`
-		Deleted          bool          `json:"deleted"`
-		Activated        bool          `json:"activated"`
-		Private          bool          `json:"private"`
-		Updatestamp      time.Time     `json:"updatestamp"`
-		Branch           string        `json:"branch"`
-		Active           null.NullBool `json:"active"`
-		ServiceID        string        `json:"service_id"`
-		ImageToken       string        `json:"image_token"`
-	} `json:"repo"`
+	Repo   Repo  `json:"repo"`
 	Meta   Meta  `json:"meta"`
 	Owner  Owner `json:"owner"`
 	Commit struct {

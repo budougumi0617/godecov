@@ -12,8 +12,8 @@ import (
 func TestClient_GetPull(t *testing.T) {
 	// Confirm degradation
 	user := "budougumi0617"
-	repo := "godecov"
-	no := 10
+	repo := "gopl"
+	no := 55
 	tok := os.Getenv("CODECOV_API_TOKEN")
 	cli := godecov.NewClient(tok)
 	_, err := cli.GetPull(user, repo, no)
