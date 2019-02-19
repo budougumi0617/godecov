@@ -28,6 +28,9 @@ type TotalsArray struct {
 
 // UnmarshalJSON creates TotalsArray from []interface{}.
 func (ta *TotalsArray) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		return nil
+	}
 	var arr []interface{}
 	err := json.Unmarshal(data, &arr)
 	if err != nil {
