@@ -56,6 +56,33 @@ type Commit struct {
 	Message   string      `json:"message"`
 }
 
+// Commit2 defines a git commit.
+type Commit2 struct {
+	Author    Author  `json:"author"`
+	Timestamp string  `json:"timestamp"`
+	Totals    Totals2 `json:"totals"`
+	Commitid  string  `json:"commitid"`
+	CiPassed  bool    `json:"ci_passed"`
+	Message   string  `json:"message"`
+}
+
+// Totals2 :
+type Totals2 struct {
+	C    int         `json:"C"`
+	B    int         `json:"b"`
+	D    int         `json:"d"`
+	F    int         `json:"f"`
+	H    int         `json:"h"`
+	M    int         `json:"M"`
+	Cs   string      `json:"c"`
+	N    int         `json:"N"`
+	P    int         `json:"p"`
+	M2   int         `json:"m"`
+	Diff TotalsArray `json:"diff"`
+	S    int         `json:"s"`
+	N3   int         `json:"n"`
+}
+
 // OwnerResponse is struct for response from /api/gh/:owner.
 type OwnerResponse struct {
 	Repos []struct {

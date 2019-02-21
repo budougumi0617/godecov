@@ -34,28 +34,7 @@ type BranchesResponse struct {
 
 // Branch :
 type Branch struct {
-	Commit struct {
-		Author    Author `json:"author"`
-		Timestamp string `json:"timestamp"`
-		Totals    struct {
-			C    int         `json:"C"`
-			B    int         `json:"b"`
-			D    int         `json:"d"`
-			F    int         `json:"f"`
-			H    int         `json:"h"`
-			M    int         `json:"M"`
-			Cs   string      `json:"c"`
-			N    int         `json:"N"`
-			P    int         `json:"p"`
-			M2   int         `json:"m"`
-			Diff TotalsArray `json:"diff"`
-			S    int         `json:"s"`
-			N3   int         `json:"n"`
-		} `json:"totals"`
-		Commitid string `json:"commitid"`
-		CiPassed bool   `json:"ci_passed"`
-		Message  string `json:"message"`
-	} `json:"commit"`
-	Updatestamp string `json:"updatestamp"`
-	Branch      string `json:"branch"`
+	Commit      Commit2 `json:"commit"`
+	Updatestamp string  `json:"updatestamp"`
+	Branch      string  `json:"branch"`
 }
