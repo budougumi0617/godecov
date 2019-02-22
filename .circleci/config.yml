@@ -1,3 +1,5 @@
+version: 2.1
+
 defaults: &defaults
   working_directory: /go/src/github.com/budougumi0617/godecov
   docker:
@@ -9,13 +11,15 @@ defaults: &defaults
     - TEST_RESULTS: /tmp/test-results
     - GO_COVERAGE_OUT: go-coverage.out
 
+orbs:
+  reviewdog: timakin/reviewdog@0.0.2
+
 branches: &branches
   only:
     - master
     - circleci
     - /pull.*/
 
-version: 2
 jobs:
   build:
     <<: *defaults
@@ -85,6 +89,13 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+  review:
+    <<: *defaults
+    steps:
+      - reviewdog/review:
+          linters: |
+            golang.org/x/lint/golint github.com/kisielk/errcheck
+
 
 workflows:
   version: 2
@@ -106,3 +117,6 @@ workflows:
       #   filters:
       #     branches:
       #       <<: *branches
+      - review:
+          requires:
+            - build
