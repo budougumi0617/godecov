@@ -11,6 +11,7 @@ executors:
       # For code coverage
       - TEST_RESULTS: /tmp/test-results
       - GO_COVERAGE_OUT: go-coverage.out
+      - GO111MODULE: on
 
 orbs:
   go-module: timakin/go-module@volatile
