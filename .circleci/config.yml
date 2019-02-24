@@ -34,14 +34,14 @@ jobs:
           project_name: godecov
           vendoring: false
           workspace-root: /go/src/github.com/budougumi0617/godecov
-      - run:
-          name: setup
-          command: |
-            make setup
   lint:
     executor: golang
     steps:
       - checkout
+      - run:
+          name: setup
+          command: |
+            make setup
       - run:
           name: check
           command: |
@@ -85,7 +85,8 @@ jobs:
             export GO111MODULE=off
       - reviewdog/review:
           linters: |
-            golang.org/x/lint/golint github.com/kisielk/errcheck
+            golang.org/x/lint/golint
+            github.com/kisielk/errcheck
 
 workflows:
   version: 2
