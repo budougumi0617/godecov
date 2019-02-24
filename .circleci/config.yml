@@ -79,14 +79,9 @@ jobs:
   review:
     executor: golang
     steps:
-      - run:
-          name: Off Modules
-          command: |
-            export GO111MODULE=off
+      - checkout
       - reviewdog/review:
-          linters: |
-            golang.org/x/lint/golint
-            github.com/kisielk/errcheck
+          linters: golang.org/x/lint/golint github.com/kisielk/errcheck
 
 workflows:
   version: 2
