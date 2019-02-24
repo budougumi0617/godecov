@@ -27,10 +27,6 @@ jobs:
   build:
     executor: golang
     steps:
-      - run:
-          name: echo
-          command: |
-            echo $GO111MODULE
       - go-module/download:
           attach-workspace: true
           checkout: true
@@ -85,6 +81,10 @@ jobs:
   review:
     executor: golang
     steps:
+      - run:
+          name: Off MODULE
+          command: |
+            export GO111MODULE=off
       - reviewdog/review:
           linters: |
             golang.org/x/lint/golint github.com/kisielk/errcheck
