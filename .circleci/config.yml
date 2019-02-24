@@ -37,7 +37,13 @@ jobs:
   lint:
     executor: golang
     steps:
-      - checkout
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - run:
           name: setup
           command: |
