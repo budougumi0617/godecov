@@ -27,6 +27,10 @@ jobs:
   build:
     executor: golang
     steps:
+      - run:
+          name: echo
+          command: |
+            echo $GO111MODULE
       - go-module/download:
           attach-workspace: true
           checkout: true
