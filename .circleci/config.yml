@@ -1,18 +1,21 @@
 version: 2.1
 
-defaults: &defaults
-  working_directory: /go/src/github.com/budougumi0617/godecov
-  docker:
-    - image: circleci/golang:1.11.5
-  environment:
-    - GOPATH: /go
-    - SRC_PATH: /go/src/github.com/budougumi0617/godecov
-    # For code coverage
-    - TEST_RESULTS: /tmp/test-results
-    - GO_COVERAGE_OUT: go-coverage.out
+executors:
+  golang:
+    docker:
+      - image: circleci/golang:1.11.5
+    working_directory: /go/src/github.com/budougumi0617/godecov
+    environment:
+      - GOPATH: /go
+      - SRC_PATH: /go/src/github.com/budougumi0617/godecov
+      # For code coverage
+      - TEST_RESULTS: /tmp/test-results
+      - GO_COVERAGE_OUT: go-coverage.out
+      - GO111MODULE: "on"
 
 orbs:
-  reviewdog: timakin/reviewdog@0.0.2
+  go-module: timakin/go-module@0.0.8
+  reviewdog: timakin/reviewdog@volatile
 
 branches: &branches
   only:
@@ -22,47 +25,43 @@ branches: &branches
 
 jobs:
   build:
-    <<: *defaults
+    executor: golang
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gopkg.lock" }}
-            - v1-dependencies-{{ .Environment.CACHE_VERSION }}-
+      - go-module/download:
+          attach-workspace: true
+          checkout: true
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
+  lint:
+    executor: golang
+    steps:
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - run:
           name: setup
           command: |
             make setup
       - run:
-          name: install dependencies
-          command: |
-            make dep
-      - save_cache:
-          paths:
-            - /go/src/github.com/budougumi0617/godecov/vendor/
-          key: v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gopkg.lock" }}
-      - persist_to_workspace:
-          root: /go/
-          paths:
-            - bin/*
-            - src/*
-            - pkg/*
-            - src/github.com/budougumi0617/godecov/vendor/
-
-  lint:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: /go/
-      - run:
           name: check
           command: |
             make check
   test:
-    <<: *defaults
+    executor: golang
     steps:
-      - attach_workspace:
-          at: /go/
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - run:
           name: Install test reporter
           command: |
@@ -90,21 +89,23 @@ jobs:
           path: /tmp/test-results
           destination: test-results
   review:
-    <<: *defaults
+    executor: golang
     steps:
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - reviewdog/review:
-          linters: |
-            golang.org/x/lint/golint github.com/kisielk/errcheck
-
+          linters: golang.org/x/lint/golint github.com/kisielk/errcheck
 
 workflows:
   version: 2
   build_test:
     jobs:
       - build
-      #   filters:
-      #     branches:
-      #       <<: *branches
       - lint:
           requires:
             - build
