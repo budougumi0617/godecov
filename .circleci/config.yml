@@ -41,8 +41,6 @@ jobs:
   lint:
     executor: golang
     steps:
-      - attach_workspace:
-          at: /go/
       - run:
           name: check
           command: |
@@ -50,8 +48,6 @@ jobs:
   test:
     executor: golang
     steps:
-      - attach_workspace:
-          at: /go/
       - run:
           name: Install test reporter
           command: |
@@ -81,10 +77,6 @@ jobs:
   review:
     executor: golang
     steps:
-      - run:
-          name: Off MODULE
-          command: |
-            export GO111MODULE=off
       - reviewdog/review:
           linters: |
             golang.org/x/lint/golint github.com/kisielk/errcheck
