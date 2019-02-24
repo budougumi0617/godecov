@@ -14,7 +14,7 @@ executors:
       - GO111MODULE: "on"
 
 orbs:
-  go-module: timakin/go-module@volatile
+  go-module: timakin/go-module@0.0.8
   reviewdog: timakin/reviewdog@volatile
 
 branches: &branches
@@ -55,7 +55,13 @@ jobs:
   test:
     executor: golang
     steps:
-      - checkout
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - run:
           name: Install test reporter
           command: |
@@ -85,7 +91,13 @@ jobs:
   review:
     executor: golang
     steps:
-      - checkout
+      - go-module/download:
+          attach-workspace: true
+          checkout: false
+          persist-to-workspace: true
+          project_name: godecov
+          vendoring: false
+          workspace-root: /go/src/github.com/budougumi0617/godecov
       - reviewdog/review:
           linters: golang.org/x/lint/golint github.com/kisielk/errcheck
 
