@@ -1,6 +1,7 @@
 godecov
 ====
 [![GoDoc](https://godoc.org/github.com/budougumi0617/godecov?status.svg)](https://godoc.org/github.com/budougumi0617/godecov)
+[![GolangCI](https://golangci.com/badges/github.com/budougumi0617/godecov.svg)](https://golangci.com/r/github.com/budougumi0617/godecov)
 [![CircleCI](https://img.shields.io/circleci/project/github/budougumi0617/godecov.svg)](https://circleci.com/gh/budougumi0617/godecov/tree/master)
 [![codecov](https://codecov.io/gh/budougumi0617/godecov/branch/master/graph/badge.svg)](https://codecov.io/gh/budougumi0617/godecov)
 [![Go Report Card](https://goreportcard.com/badge/github.com/budougumi0617/godecov)](https://goreportcard.com/report/github.com/budougumi0617/godecov)
